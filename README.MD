@@ -13,7 +13,7 @@ URL: https://hub.docker.com/r/hatusil/app-web
 
 ## Capturas de pantalla
 
-![Captura de pantalla de la aplicación](./capturas/vista-app.png)
+![Captura de pantalla de la aplicación](./mi-app-web/capturas/vista-app.png)
 
 ## Estructura del Proyecto
 

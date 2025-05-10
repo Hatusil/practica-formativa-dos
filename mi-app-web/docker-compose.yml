@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mipassword
+      MYSQL_DATABASE: mibasededatos
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: mipassword
+    ports:
+      - "3306:3306"
+    networks:
+      - mi-red-app
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  php:
+    image: hatusil/mi-app-web:1.0  # Usa tu imagen de Docker Hub
+    container_name: php-app
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - mi-red-app
+
+  nginx:
+    image: nginx:alpine
+    container_name: webserver
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - mi-red-app
+
+networks:
+  mi-red-app:
+    driver: bridge
+
+volumes:
+  mysql-data:

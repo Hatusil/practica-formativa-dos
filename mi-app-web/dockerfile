@@ -1,0 +1,17 @@
+FROM php:8.0-fpm
+
+# Instalar extensiones de PHP para MySQL y herramientas para debugging
+RUN apt-get update && apt-get install -y \
+    default-mysql-client \
+    iputils-ping \
+    && docker-php-ext-install mysqli pdo pdo_mysql
+
+# Configurar PHP para mostrar errores
+RUN echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-errors.ini \
+    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-errors.ini
+
+WORKDIR /var/www/html
+COPY . .
+
+# Asegurar que el script de espera tenga permisos de ejecución
+RUN chmod +x /var/www/html/wait-for-mysql.sh

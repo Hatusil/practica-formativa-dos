@@ -6,10 +6,14 @@ Esta aplicación web simple muestra una lista de usuarios desde una base de dato
 
 Esta aplicación está disponible como imagen en Docker Hub:
 ```
-ricardo-gieco/app-web:1.0
+hatusil/app-web:1.0
 ```
 
-URL: https://hub.docker.com/r/ricardo-gieco/app-web
+URL: https://hub.docker.com/r/hatusil/app-web
+
+## Capturas de pantalla
+
+![Captura de pantalla de la aplicación](./capturas/vista-app.png)
 
 ## Estructura del Proyecto
 

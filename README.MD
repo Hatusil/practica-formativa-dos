@@ -20,9 +20,9 @@ mi-app-web/
 ├── docker-compose-deploy.yml  # Configuración para uso de la imagen publicada
 ├── Dockerfile           # Configuración para la imagen de PHP
 ├── app/
-│   └── index.php        # Página principal de la aplicación
+│   ├── index.php        # Página principal de la aplicación
+│   └── test_db.php      # Script de diagnóstico de conexión
 ├── init.sql             # Script SQL para inicializar la base de datos
-├── test_db.php          # Script de diagnóstico de conexión
 └── wait-for-mysql.sh    # Script para esperar a MySQL
 ```
 
@@ -99,8 +99,7 @@ mi-app-web/
 
 1. Clonar este repositorio:
    ```bash
-   git clone https://github.com/ricardogieco/docker-practice.git
-   cd docker-practice
+   git clone https://github.com/Hatusil/practica-formativa-dos
    ```
 
 2. Construir y levantar los contenedores:
@@ -121,7 +120,7 @@ mi-app-web/
 
 2. Construye la imagen:
    ```bash
-   docker build -t ricardo-gieco/app-web:1.0 .
+   docker build -t hatusil/app-web:1.0 .
    ```
 
 3. Inicia sesión en Docker Hub:
@@ -131,7 +130,7 @@ mi-app-web/
 
 4. Sube la imagen:
    ```bash
-   docker push ricardo-gieco/app-web:1.0
+   docker push hatusil/app-web:1.0
    ```
 
 ## Problemas encontrados y soluciones
@@ -226,11 +225,11 @@ docker logs nombre-contenedor
 docker network create mi-red-app
 
 # Construir la imagen de la aplicación
-docker build -t ricardo-gieco/app-web:1.0 .
+docker build -t hatusil/app-web:1.0 .
 
 # Subir la imagen a Docker Hub
 docker login
-docker push ricardo-gieco/app-web:1.0
+docker push hatusil/app-web:1.0
 
 # Detener todos los contenedores
 docker-compose down

@@ -1,16 +1,16 @@
 version: '3.8'
 services:
-  # Servicio para la aplicación web basada en PHP
+  # Servicio para la aplicación web utilizando la imagen de Docker Hub
   app:
-    build: . # Usa el Dockerfile en el directorio actual
+    image: tuusuario/mi-app-web:1.0 # Cambiar por tu usuario de Docker Hub
     container_name: mi-app-web
     ports:
       - "8080:80" # Mapeo del puerto 8080 del host al 80 del contenedor
     volumes:
-      - ./app:/var/www/html # Montaje del código fuente
       - php_logs:/var/log/php # Volumen para los logs de PHP
     depends_on:
-      - db # Asegura que el servicio de base de datos esté iniciado primero
+      db:
+        condition: service_healthy # Espera a que el servicio de MySQL esté saludable
     networks:
       - mi-red-app
     restart: unless-stopped # Reinicia el contenedor automáticamente si falla

@@ -1,17 +1,24 @@
-FROM php:8.0-fpm
+# Dockerfile para la aplicación web
+# Utilizamos PHP con Apache como base para ejecutar la aplicación
+FROM php:8.1-apache
 
-# Instalar extensiones de PHP para MySQL y herramientas para debugging
-RUN apt-get update && apt-get install -y \
-    default-mysql-client \
-    iputils-ping \
-    && docker-php-ext-install mysqli pdo pdo_mysql
+# Instalamos extensiones de PHP necesarias para MySQL
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Configurar PHP para mostrar errores
-RUN echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-errors.ini \
-    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-errors.ini
+# Creamos el directorio para los logs y establecemos los permisos adecuados
+RUN mkdir -p /var/log/php && \
+    chown -R www-data:www-data /var/log/php && \
+    chmod -R 755 /var/log/php
 
-WORKDIR /var/www/html
-COPY . .
+# Copiamos el código de la aplicación al directorio de trabajo del servidor
+COPY ./app/ /var/www/html/
 
-# Asegurar que el script de espera tenga permisos de ejecución
-RUN chmod +x /var/www/html/wait-for-mysql.sh
+# Establecemos permisos adecuados para los archivos
+RUN chown -R www-data:www-data /var/www/html/ && \
+    chmod -R 755 /var/www/html/
+
+# Exponemos el puerto 80 para acceder al servidor web
+EXPOSE 80
+
+# Comando que se ejecutará cuando se inicie el contenedor
+CMD ["apache2-foreground"]

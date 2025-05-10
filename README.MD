@@ -141,7 +141,7 @@ Si experimentas problemas con la conexión a la base de datos:
 
 ## Capturas de pantalla
 
-![Captura de pantalla de la aplicación](./capturas/vista-app.png)
+![Captura de pantalla de la aplicación](./mi-app-web/capturas/vista-app.png)
 
 ## Licencia
 
